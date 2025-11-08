@@ -104,9 +104,18 @@ class _WeatherAppState extends State<WeatherApp> {
     } catch (e) {
       bool found = await _loadCachedData(index, showCachedMessage: true);
       if (!found) {
-        setState(
-          () => errorMessage = "Failed to fetch data. No cached result found.",
-        );
+        setState(() {
+          errorMessage = "Failed to fetch data. No cached result found.";
+          // Clear previous weather data
+          temperature = null;
+          windSpeed = null;
+          weatherCode = null;
+          lastUpdated = null;
+          requestUrl = null;
+          lat = null;
+          lon = null;
+          isCached = false;
+        });
       }
     } finally {
       setState(() => isLoading = false);
